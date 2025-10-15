@@ -1,0 +1,28 @@
+[
+{
+  "model": "catalog.product",
+  "pk": 1,
+  "fields": {
+    "name": "Смартфон",
+    "description": "Современный смартфон",
+    "image": "",
+    "category": 1,
+    "price": "27999.99",
+    "created_at": "2025-10-15T11:08:22.571Z",
+    "updated_at": "2025-10-15T11:08:22.622Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 3,
+  "fields": {
+    "name": "Программирование на Python",
+    "description": "Книга по программированию",
+    "image": "",
+    "category": 3,
+    "price": "1499.99",
+    "created_at": "2025-10-15T11:08:22.615Z",
+    "updated_at": "2025-10-15T11:08:22.615Z"
+  }
+}
+]
