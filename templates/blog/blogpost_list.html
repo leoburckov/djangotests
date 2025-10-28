@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>Блог</h1>
+
+{% if posts %}
+    {% for post in posts %}
+        <div class="product-card">
+            <h3>{{ post.title }}</h3>
+            
+            {% if post.preview %}
+                <img src="{{ post.preview.url }}" alt="{{ post.title }}" style="max-width: 300px; height: auto;">
+            {% endif %}
+            
+            <p>{{ post.content|truncatewords:30 }}</p>
+            
+            <div style="display: flex; justify-content: space-between; color: #666; font-size: 0.9rem;">
+                <span>Просмотров: {{ post.views_count }}</span>
+                <span>{{ post.created_at|date:"d.m.Y" }}</span>
+            </div>
+            
+            <a href="{% url 'blog:post_detail' post.pk %}">Читать далее</a>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Пока нет опубликованных записей в блоге.</p>
+{% endif %}
+
+<a href="{% url 'blog:post_create' %}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+    Создать запись
+</a>
+{% endblock %}

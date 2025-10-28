@@ -1,41 +1,36 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-
-from catalog.models import Product
+from django.views.generic import ListView, DetailView, TemplateView
+from .models import Product
 
 
-def home(request):
-    """Контроллер для главной страницы"""
-    products = Product.objects.all()[:6]  # Получаем первые 6 товаров
-    context = {
-        'products': products,
-        'title': 'Главная страница'
-    }
-    return render(request, 'home.html', context)
+class IndexView(ListView):
+    model = Product
+    template_name = 'catalog/home.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return Product.objects.all()[:6]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная страница'
+        return context
 
 
-def contacts(request):
-    """Контроллер для страницы контактов"""
-    if request.method == 'POST':
-        # Обработка данных формы
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        message = request.POST.get('message')
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_detail.html'
+    context_object_name = 'product'
 
-        # Здесь можно добавить логику сохранения или отправки email
-        print(f"Получено сообщение от {name}, телефон: {phone}")
-        print(f"Сообщение: {message}")
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Товар - {self.object.name}'
+        return context
 
-        # Можно добавить редирект после успешной отправки
-        # return HttpResponseRedirect('/contacts/')
 
-    return render(request, 'contacts.html')
+class ContactsView(TemplateView):
+    template_name = 'catalog/contacts.html'
 
-def product_detail(request, pk):
-    """Контроллер для страницы одного товара"""
-    product = get_object_or_404(Product, pk=pk)
-    context = {
-        'product': product,
-        'title': f'Товар - {product.name}'
-    }
-    return render(request, 'catalog/product_detail.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Контакты'
+        return context

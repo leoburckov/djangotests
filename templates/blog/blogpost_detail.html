@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<article>
+    <h1>{{ post.title }}</h1>
+    
+    {% if post.preview %}
+        <img src="{{ post.preview.url }}" alt="{{ post.title }}" style="max-width: 500px; height: auto;">
+    {% endif %}
+    
+    <div style="color: #666; margin-bottom: 20px;">
+        <span>Дата создания: {{ post.created_at|date:"d.m.Y H:i" }}</span>
+        <span style="margin-left: 20px;">Просмотров: {{ post.views_count }}</span>
+    </div>
+    
+    <div style="line-height: 1.8;">
+        {{ post.content|linebreaks }}
+    </div>
+    
+    <div style="margin-top: 30px;">
+        <a href="{% url 'blog:post_list' %}">← Назад к списку</a>
+        <a href="{% url 'blog:post_update' post.pk %}" style="margin-left: 20px;">Редактировать</a>
+        <a href="{% url 'blog:post_delete' post.pk %}" style="margin-left: 20px; color: red;">Удалить</a>
+    </div>
+</article>
+{% endblock %}
