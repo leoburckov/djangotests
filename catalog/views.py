@@ -1,10 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from catalog.models import Product
+
 
 def home(request):
     """Контроллер для главной страницы"""
-    return render(request, 'home.html')
+    products = Product.objects.all()[:6]  # Получаем первые 6 товаров
+    context = {
+        'products': products,
+        'title': 'Главная страница'
+    }
+    return render(request, 'home.html', context)
 
 
 def contacts(request):
@@ -23,3 +30,12 @@ def contacts(request):
         # return HttpResponseRedirect('/contacts/')
 
     return render(request, 'contacts.html')
+
+def product_detail(request, pk):
+    """Контроллер для страницы одного товара"""
+    product = get_object_or_404(Product, pk=pk)
+    context = {
+        'product': product,
+        'title': f'Товар - {product.name}'
+    }
+    return render(request, 'catalog/product_detail.html', context)
