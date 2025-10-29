@@ -1,9 +1,8 @@
 from django.urls import path
-from .views import home, contacts
-
-app_name = 'catalog'
+from .views import IndexView, ProductDetailView, ContactsView
 
 urlpatterns = [
-    path('', home, name='home'),           # → http://127.0.0.1:8000/
-    path('contacts/', contacts, name='contacts'),  # → http://127.0.0.1:8000/contacts/
+    path('', IndexView.as_view(), name='home'),
+    path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
+    path('contacts/', ContactsView.as_view(), name='contacts'),
 ]
