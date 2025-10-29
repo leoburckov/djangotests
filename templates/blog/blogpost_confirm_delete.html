@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление: {{ object.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <h1>Удаление записи</h1>
+        
+        <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem;">
+            <h3 style="margin-top: 0; color: #856404;">Вы уверены, что хотите удалить запись?</h3>
+            <p style="margin-bottom: 0;"><strong>"{{ object.title }}"</strong></p>
+            <p style="color: #666; font-size: 0.9rem; margin-top: 0.5rem;">Это действие нельзя отменить.</p>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" style="padding: 0.75rem 1.5rem; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Да, удалить
+                </button>
+                <a href="{% url 'blog:post_detail' object.pk %}" style="padding: 0.75rem 1.5rem; background: #95a5a6; color: white; text-decoration: none; border-radius: 4px;">
+                    Отмена
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

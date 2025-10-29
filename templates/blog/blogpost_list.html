@@ -1,34 +1,63 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}Блог{% endblock %}
 
 {% block content %}
-<h1>Блог</h1>
+<div class="container">
+    <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 2rem;">
+        <h1>Блог</h1>
+        <a href="{% url 'blog:post_create' %}" style="padding: 0.75rem 1.5rem; background: #27ae60; color: white; text-decoration: none; border-radius: 4px;">
+            Создать запись
+        </a>
+    </div>
 
-{% if posts %}
-    {% for post in posts %}
-        <div class="product-card">
-            <h3>{{ post.title }}</h3>
-            
-            {% if post.preview %}
-                <img src="{{ post.preview.url }}" alt="{{ post.title }}" style="max-width: 300px; height: auto;">
-            {% endif %}
-            
-            <p>{{ post.content|truncatewords:30 }}</p>
-            
-            <div style="display: flex; justify-content: space-between; color: #666; font-size: 0.9rem;">
-                <span>Просмотров: {{ post.views_count }}</span>
-                <span>{{ post.created_at|date:"d.m.Y" }}</span>
-            </div>
-            
-            <a href="{% url 'blog:post_detail' post.pk %}">Читать далее</a>
+    {% if posts %}
+        <div style="display: grid; gap: 2rem;">
+            {% for post in posts %}
+                <div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; background: white;">
+                    <div style="display: flex; gap: 1.5rem;">
+                        {% if post.preview %}
+                            <div style="flex: 0 0 200px;">
+                                <img src="{{ post.preview.url }}" alt="{{ post.title }}"
+                                     style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px;">
+                            </div>
+                        {% endif %}
+                        <div style="flex: 1;">
+                            <h3 style="margin-top: 0; margin-bottom: 0.5rem;">
+                                <a href="{% url 'blog:post_detail' post.pk %}" style="color: #2c3e50; text-decoration: none;">
+                                    {{ post.title }}
+                                </a>
+                            </h3>
+                            <p style="color: #666; line-height: 1.5; margin-bottom: 1rem;">
+                                {{ post.content|truncatewords:30 }}
+                            </p>
+                            <div style="display: flex; justify-content: between; align-items: center;">
+                                <div style="color: #7f8c8d; font-size: 0.9rem;">
+                                    <span>Просмотров: {{ post.views_count }}</span>
+                                    <span style="margin-left: 1rem;">{{ post.created_at|date:"d.m.Y" }}</span>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <a href="{% url 'blog:post_detail' post.pk %}" style="padding: 0.5rem 1rem; background: #3498db; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9rem;">
+                                        Читать
+                                    </a>
+                                    <a href="{% url 'blog:post_update' post.pk %}" style="padding: 0.5rem 1rem; background: #f39c12; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9rem;">
+                                        Редактировать
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-{% else %}
-    <p>Пока нет опубликованных записей в блоге.</p>
-{% endif %}
-
-<a href="{% url 'blog:post_create' %}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-    Создать запись
-</a>
+    {% else %}
+        <div style="text-align: center; padding: 3rem; background: #f8f9fa; border-radius: 8px;">
+            <h3 style="color: #6c757d; margin-bottom: 1rem;">Пока нет опубликованных записей</h3>
+            <p style="color: #6c757d; margin-bottom: 2rem;">Будьте первым, кто добавит запись в блог!</p>
+            <a href="{% url 'blog:post_create' %}" style="padding: 0.75rem 1.5rem; background: #27ae60; color: white; text-decoration: none; border-radius: 4px;">
+                Создать первую запись
+            </a>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
