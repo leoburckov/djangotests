@@ -6,10 +6,17 @@ from .models import BlogPost
 class BlogPostListView(ListView):
     model = BlogPost
     template_name = 'blog/blogpost_list.html'
+    fields = ['title', 'content', 'preview', 'is_published']
+    success_url = reverse_lazy('blog:post_list')
+    context_object_name = 'posts'
 
     def get_queryset(self):
-        return BlogPost.objects.filter(is_published=True)
+        return BlogPost.objects.filter(is_published=True)  # Добавьте этот метод
 
+    def form_valid(self, form):
+        # Автоматически публиковать новые посты
+        form.instance.is_published = True
+        return super().form_valid(form)
 
 class BlogPostDetailView(DetailView):
     model = BlogPost

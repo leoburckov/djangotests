@@ -6,7 +6,8 @@
 <div class="container">
     <h1>{{ title }}</h1>
 
-    <form method="post" enctype="multipart/form-data" style="max-width: 600px;">
+    <!-- ДОБАВЬТЕ ЯВНЫЙ ACTION -->
+    <form method="post" enctype="multipart/form-data" style="max-width: 600px;" action="{% url 'blog:post_create' %}">
         {% csrf_token %}
 
         <div style="margin-bottom: 1rem;">

@@ -11,9 +11,9 @@
         </a>
     </div>
 
-    {% if posts %}
+    {% if object_list %}
         <div style="display: grid; gap: 2rem;">
-            {% for post in posts %}
+            {% for post in object_list %}
                 <div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; background: white;">
                     <div style="display: flex; gap: 1.5rem;">
                         {% if post.preview %}
