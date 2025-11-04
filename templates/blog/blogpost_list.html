@@ -11,9 +11,9 @@
         </a>
     </div>
 
-    {% if object_list %}
+    {% if posts %}
         <div style="display: grid; gap: 2rem;">
-            {% for post in object_list %}
+            {% for post in posts %}
                 <div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; background: white;">
                     <div style="display: flex; gap: 1.5rem;">
                         {% if post.preview %}
@@ -24,6 +24,7 @@
                         {% endif %}
                         <div style="flex: 1;">
                             <h3 style="margin-top: 0; margin-bottom: 0.5rem;">
+                                <!-- ИСПРАВЛЕННАЯ ССЫЛКА -->
                                 <a href="{% url 'blog:post_detail' post.pk %}" style="color: #2c3e50; text-decoration: none;">
                                     {{ post.title }}
                                 </a>
@@ -37,9 +38,11 @@
                                     <span style="margin-left: 1rem;">{{ post.created_at|date:"d.m.Y" }}</span>
                                 </div>
                                 <div style="display: flex; gap: 0.5rem;">
+                                    <!-- ИСПРАВЛЕННАЯ ССЫЛКА -->
                                     <a href="{% url 'blog:post_detail' post.pk %}" style="padding: 0.5rem 1rem; background: #3498db; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9rem;">
                                         Читать
                                     </a>
+                                    <!-- ИСПРАВЛЕННАЯ ССЫЛКА -->
                                     <a href="{% url 'blog:post_update' post.pk %}" style="padding: 0.5rem 1rem; background: #f39c12; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9rem;">
                                         Редактировать
                                     </a>
