@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %}Продукты{% endblock %}
+{% block title %}Все продукты{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Продукты</h1>
+        <h1>Все продукты</h1>
+        <!-- КНОПКА СОЗДАНИЯ ПРОДУКТА -->
         <a href="{% url 'catalog:product_create' %}" class="btn btn-success">
             + Создать продукт
         </a>
     </div>
 
     <div class="row">
-        {% for product in object_list %}
+        {% for product in products %}
         <div class="col-md-4 mb-4">
             <div class="card h-100">
                 {% if product.image %}
@@ -30,6 +31,9 @@
                             <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-warning btn-sm">
                                 Редактировать
                             </a>
+                            <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-danger btn-sm">
+                                Удалить
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -40,6 +44,7 @@
             <div class="alert alert-info text-center">
                 <h4>Продуктов пока нет</h4>
                 <p>Будьте первым, кто добавит продукт в каталог!</p>
+                <!-- КНОПКА ДЛЯ СОЗДАНИЯ ПЕРВОГО ПРОДУКТА -->
                 <a href="{% url 'catalog:product_create' %}" class="btn btn-primary">
                     Создать первый продукт
                 </a>
