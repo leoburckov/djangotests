@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Магазин{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 1rem 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 1rem;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .main-content {
+            min-height: calc(100vh - 120px);
+            padding: 20px 0;
+        }
+        footer {
+            background: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 style="display: inline-block; margin-right: 2rem;">Магазин</h1>
+            <nav style="display: inline-block;">
+                <a href="{% url 'home' %}">Главная</a>
+                <a href="{% url 'blog:post_list' %}">Блог</a>
+                <a href="{% url 'contacts' %}">Контакты</a>
+                <a href="/admin/">Админка</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            {% block content %}
+            <!-- Контент страниц будет здесь -->
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Магазин. Все права защищены.</p>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

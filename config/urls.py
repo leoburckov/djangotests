@@ -3,5 +3,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('catalog.urls', namespace="catalog")),  # подключение без префикса
+    path('', include('catalog.urls')),  # Подключаем URLs каталога
+    path('blog/', include('blog.urls')),  # Подключаем URLs блога
 ]
