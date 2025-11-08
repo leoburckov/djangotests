@@ -1,14 +1,30 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}
+    {% if object.pk %}
+        Редактировать: {{ object.title }}
+    {% else %}
+        Создать запись
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>{{ title }}</h1>
+    <h1>
+        {% if object.pk %}
+            Редактировать запись
+        {% else %}
+            Создать новую запись
+        {% endif %}
+    </h1>
 
-    <!-- ДОБАВЬТЕ ЯВНЫЙ ACTION -->
-    <form method="post" enctype="multipart/form-data" style="max-width: 600px;" action="{% url 'blog:post_create' %}">
+    <form method="post" enctype="multipart/form-data" style="max-width: 600px;">
         {% csrf_token %}
+
+        <!-- Используем object вместо form.instance -->
+        {% if object.pk %}
+            <input type="hidden" name="pk" value="{{ object.pk }}">
+        {% endif %}
 
         <div style="margin-bottom: 1rem;">
             <label for="id_title" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Заголовок:</label>
@@ -38,6 +54,15 @@
             {% if form.preview.errors %}
                 <div style="color: red; font-size: 0.9rem; margin-top: 0.25rem;">{{ form.preview.errors }}</div>
             {% endif %}
+
+            <!-- Показ текущего изображения при редактировании -->
+            {% if object.preview %}
+                <div style="margin-top: 0.5rem;">
+                    <p><strong>Текущее изображение:</strong></p>
+                    <img src="{{ object.preview.url }}" alt="Current preview" style="max-width: 200px; height: auto; border-radius: 4px;">
+                    <p style="font-size: 0.8rem; color: #666;">Чтобы изменить изображение, выберите новый файл выше</p>
+                </div>
+            {% endif %}
         </div>
 
         <div style="margin-bottom: 1rem;">
@@ -53,7 +78,7 @@
 
         <div style="display: flex; gap: 1rem;">
             <button type="submit" style="padding: 0.75rem 1.5rem; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                Сохранить
+                {% if object.pk %}Обновить запись{% else %}Создать запись{% endif %}
             </button>
             <a href="{% url 'blog:post_list' %}" style="padding: 0.75rem 1.5rem; background: #95a5a6; color: white; text-decoration: none; border-radius: 4px;">
                 Отмена
