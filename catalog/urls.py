@@ -4,7 +4,7 @@ from .views import (
     ProductListView, ProductCreateView, ProductUpdateView, ProductDeleteView
 )
 
-#app_name = 'catalog'  # Это должно быть
+app_name = 'catalog'  # Это должно быть
 
 urlpatterns = [
     path('', IndexView.as_view(), name='home'),  # Главная страница

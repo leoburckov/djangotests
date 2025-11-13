@@ -1,19 +1,46 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-<h1>{{ product.name }}</h1>
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>{{ product.name }}</h1>
+        <div>
+            <!-- КНОПКИ УПРАВЛЕНИЯ ПРОДУКТОМ -->
+            <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-warning">
+                Редактировать
+            </a>
+            <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-danger">
+                Удалить
+            </a>
+            <!-- КНОПКА СОЗДАНИЯ НОВОГО ПРОДУКТА -->
+            <a href="{% url 'catalog:product_create' %}" class="btn btn-success">
+                + Новый продукт
+            </a>
+        </div>
+    </div>
 
-{% if product.image %}
-    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width: 400px; height: auto;">
-{% endif %}
+    <div class="row">
+        <div class="col-md-6">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h3>Описание</h3>
+            <p>{{ product.description }}</p>
+            <h4>Цена: {{ product.price }} руб.</h4>
+            <p><strong>Категория:</strong> {{ product.category.name }}</p>
+            <p><strong>Создан:</strong> {{ product.created_at|date:"d.m.Y H:i" }}</p>
+        </div>
+    </div>
 
-<p><strong>Описание:</strong> {{ product.description }}</p>
-<p><strong>Категория:</strong> {{ product.category.name }}</p>
-<p><strong>Цена:</strong> {{ product.price }} руб.</p>
-<p><strong>Дата создания:</strong> {{ product.created_at|date:"d.m.Y H:i" }}</p>
-<p><strong>Дата обновления:</strong> {{ product.updated_at|date:"d.m.Y H:i" }}</p>
-
-<a href="{% url 'home' %}">← Назад на главную</a>
+    <!-- ССЫЛКА НАЗАД -->
+    <div class="mt-4">
+        <a href="{% url 'catalog:product_list' %}" class="btn btn-secondary">
+            ← Назад к списку продуктов
+        </a>
+    </div>
+</div>
 {% endblock %}
