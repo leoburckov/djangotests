@@ -6,7 +6,6 @@ from .models import User
 class UserRegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Стилизация всех полей
         for field_name, field in self.fields.items():
             if field_name == 'avatar':
                 field.widget.attrs.update({'class': 'form-control'})
@@ -35,18 +34,3 @@ class UserRegisterForm(UserCreationForm):
             'country': forms.TextInput(attrs={'placeholder': 'Ваша страна'}),
         }
 
-# УДАЛИТЕ ИЛИ ЗАКОММЕНТИРУЙТЕ UserLoginForm
-# class UserLoginForm(forms.Form):
-#     email = forms.EmailField(
-#         widget=forms.EmailInput(attrs={
-#             'class': 'form-control form-control-lg',
-#             'placeholder': 'Введите ваш email',
-#             'autofocus': True
-#         })
-#     )
-#     password = forms.CharField(
-#         widget=forms.PasswordInput(attrs={
-#             'class': 'form-control form-control-lg',
-#             'placeholder': 'Введите пароль'
-#         })
-#     )
