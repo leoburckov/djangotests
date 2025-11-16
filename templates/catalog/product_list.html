@@ -6,10 +6,11 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Все продукты</h1>
-        <!-- КНОПКА СОЗДАНИЯ ПРОДУКТА -->
+        {% if user.is_authenticated %}
         <a href="{% url 'catalog:product_create' %}" class="btn btn-success">
             + Создать продукт
         </a>
+        {% endif %}
     </div>
 
     <div class="row">
@@ -28,12 +29,14 @@
                             <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary btn-sm">
                                 Подробнее
                             </a>
+                            {% if user.is_authenticated %}
                             <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-warning btn-sm">
                                 Редактировать
                             </a>
                             <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-danger btn-sm">
                                 Удалить
                             </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -44,10 +47,11 @@
             <div class="alert alert-info text-center">
                 <h4>Продуктов пока нет</h4>
                 <p>Будьте первым, кто добавит продукт в каталог!</p>
-                <!-- КНОПКА ДЛЯ СОЗДАНИЯ ПЕРВОГО ПРОДУКТА -->
+                {% if user.is_authenticated %}
                 <a href="{% url 'catalog:product_create' %}" class="btn btn-primary">
                     Создать первый продукт
                 </a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
