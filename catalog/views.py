@@ -1,4 +1,3 @@
-# catalog/views.py
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -12,7 +11,7 @@ from django.conf import settings
 
 from .models import Product, Category
 from .forms import ProductForm, ProductModerationForm
-from .services import get_products_by_category  # Импорт сервисной функции
+from .services import get_products_by_category
 
 
 class ProductOwnerMixin(UserPassesTestMixin):
