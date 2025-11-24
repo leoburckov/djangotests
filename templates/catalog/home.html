@@ -6,10 +6,11 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Главная страница</h1>
-        <!-- ДОБАВЬТЕ ЭТУ КНОПКУ -->
+        {% if user.is_authenticated %}
         <a href="{% url 'catalog:product_create' %}" class="btn btn-success">
             + Создать продукт
         </a>
+        {% endif %}
     </div>
 
     <div class="row">
@@ -19,11 +20,22 @@
                 {% if product.image %}
                 <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
                 {% endif %}
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text">{{ product.description|truncatewords:20 }}</p>
-                    <p class="card-text"><strong>Цена: {{ product.price }} руб.</strong></p>
-                    <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary">Подробнее</a>
+                    <p class="card-text flex-grow-1">{{ product.description|truncatewords:20 }}</p>
+                    <div class="mt-auto">
+                        <p class="card-text"><strong>Цена: {{ product.price }} руб.</strong></p>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary btn-sm">
+                                Подробнее
+                            </a>
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-warning btn-sm">
+                                Редактировать
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,10 +44,15 @@
             <div class="alert alert-info text-center">
                 <h4>Продуктов пока нет</h4>
                 <p>Будьте первым, кто добавит продукт в каталог!</p>
-                <!-- И ЗДЕСЬ ТОЖЕ ДОБАВЬТЕ КНОПКУ -->
+                {% if user.is_authenticated %}
                 <a href="{% url 'catalog:product_create' %}" class="btn btn-primary">
                     Создать первый продукт
                 </a>
+                {% else %}
+                <a href="{% url 'users:login' %}" class="btn btn-primary">
+                    Войдите, чтобы создать продукт
+                </a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
