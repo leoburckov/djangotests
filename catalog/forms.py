@@ -1,7 +1,7 @@
+# catalog/forms.py
 from django import forms
 from .models import Product
 from django.core.exceptions import ValidationError
-
 
 class ProductForm(forms.ModelForm):
     FORBIDDEN_WORDS = [
@@ -17,7 +17,6 @@ class ProductForm(forms.ModelForm):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
-        # Стилизация всех полей
         for field_name, field in self.fields.items():
             if field_name == 'image':
                 field.widget.attrs.update({
@@ -64,13 +63,9 @@ class ProductForm(forms.ModelForm):
                 raise ValidationError(f'🚫 Запрещенное слово "{word}" в {field_name} продукта')
         return text
 
-
 class ProductModerationForm(forms.ModelForm):
     """Форма для модераторов"""
 
     class Meta:
         model = Product
-        fields = ['status', 'is_published']
-        widgets = {
-            'status': forms.Select(attrs={'class': 'form-control'}),
-        }
+        fields = []  # ВРЕМЕННО: пустая форма - никаких полей
